@@ -38,7 +38,7 @@
       </td>
       <td>
         A colon (<code>:</code>) separated list of gapi libraries. Ex:
-        <code>"client:iframes"</code>.
+        <code>"client:auth2"</code>.
       </td>
     </tr>
     <tr>
@@ -148,6 +148,12 @@ alert('gapi.client could not load in a timely manner!');
   <p>
     Initializes the JavaScript client with API key, OAuth client ID, scope, and
     <a href="/docs/discovery.md">API discovery document(s)</a>.
+    If OAuth client ID and scope are provided, this function will load the
+    <code>gapi.auth2</code> module to perform OAuth. The <code>gapi.client.init</code> function
+    can be run multiple times, such as to set up more APIs, to change API key, or initialize
+    OAuth lazily. Note that the <code>scope</code> and <code>clientId</code> parameters cannot
+    be provided multiple times, since the <code>gapi.auth2</code> module can only be initialized
+    once.
   </p>
   <p>
     <b>Arguments:</b>
@@ -452,7 +458,9 @@ alert('gapi.client could not load in a timely manner!');
     <code>gapi.client.setToken(<var class="apiparam">tokenObject</var>)</code>
   </h3>
   <p>
-    Sets the authentication token to use in requests.
+    Sets the authentication token to use in requests. This should be used if the token was
+    obtained without using the <code>gapi.auth2</code> authentication library (for instance,
+    when using Firebase to authenticate users).
   </p>
   <p>
     <b>Arguments:</b>
